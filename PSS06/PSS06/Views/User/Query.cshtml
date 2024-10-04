@@ -1,0 +1,75 @@
+﻿@model List<PSS06.Models.ViewModels.QueryViewModels>
+@{
+    ViewBag.Title = "Consulta";
+    Layout = "~/views/Shared/_LayoutApp.cshtml";
+}
+
+<h2>Consulta Usuario</h2>
+
+<div class="row">
+    <br />
+
+    <div class="col-md-12">
+        <input type="button"
+               value="Nuevo"
+               class="btn btn-primary btn-lg"
+               onclick="document.location.href = '@Url.Content("~/User/Add")'" />
+                
+        <input type="button"
+               value="Volver Atras"
+               class="btn btn-primary btn-lg"
+               onclick="document.location.href = '@Url.Content("~/")'" />
+    </div>
+    
+    <br />
+    <br />
+
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th style="background-color: #0094ff; color: white;">ID</th>
+                <th style="background-color: #0094ff; color: white;">Email</th>
+                <th style="background-color: #0094ff; color: white;">Edad</th>
+                <th style="background-color: #0094ff; color: white;">Accion a Tomar</th>
+            </tr>
+
+            @foreach (var Objs in Model)
+            {
+                <tr>
+                    <td>@Objs._Id</td>
+                    <td>@Objs._Email</td>
+                    <td>@Objs._Edad</td>
+
+
+                    <td>
+                        <input type="button"
+                               value="Borrar"
+                               class="btn btn-danger"
+                               onclick="jsDelete(@Objs._Id);" />
+
+                        <input type="button"
+                               value="Editar"
+                               class="btn btn-default"
+                               onclick="document.location.href = '@Url.Content("~/User/Edit/" + Objs._Id)'" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+    function jsDelete(ID) {
+        if (confirm("Estas seguro(a) de borrar ?")) {
+            url = "@Url.Content("~/User/Delete")" + "/" + ID
+
+            $.post(url, function (data) {
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/User/Query")"
+                } else {
+                    alert("Registro no fue borrado :)")
+                }
+            })
+        }
+    }
+</script>

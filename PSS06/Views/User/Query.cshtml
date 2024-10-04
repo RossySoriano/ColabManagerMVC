@@ -1,0 +1,42 @@
+﻿@model List<PSS06.Models.ViewModels.QueryViewModels>
+@{
+    ViewBag.Title = "Consulta";
+    Layout = "~/views/Shared/_LayoutApp.cshtml";
+}
+
+
+<div class="login-container">
+    <h2>Consulta Usuario</h2>
+    <form id="frmAcceder">
+        
+        <div class="form-group">
+            <label for="NombreColaborador">Nombre Del Colaborador</label>
+            <input type="text"
+                   id="NombreColaborador"
+                   name="NombreColaborador"
+                   class="form-control" />
+   
+        </div>
+        <div class="form-group">
+            <input type="submit"
+                   class="btn btn-success"
+                   value="Consultar" />
+        </div>
+    </form>
+</div>
+
+<script>
+    function jsDelete(ID) {
+        if (confirm("Estas seguro(a) de borrar ?")) {
+            url = "@Url.Content("~/User/Delete")" + "/" + ID
+
+            $.post(url, function (data) {
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/User/Query")"
+                } else {
+                    alert("Registro no fue borrado :)")
+                }
+            })
+        }
+    }
+</script>
